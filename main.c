@@ -1,54 +1,42 @@
-
 #include "utils.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 
-int read_file(uint32_t *val_ptr, char* filename)
+int main(int argc, char** args)
 {
-    FILE *pfile = fopen(filename, "r");
-    uint32_t bytes;
-    uint32_t read_bytes;
 
-    if (pfile == NULL)
+    if (argc < 2)
     {
-        printf("Cannot open file %s", filename);
+        printf("How to use : ./sum-nbo [4byte file] [...]\n");
         return 1;
     }
+    
+    //argc를 바탕으로 더할 uint32 변수들을 할당
+    int         file_num = argc - 1;
+    uint32_t*   values;
+    uint32_t    sum;
 
-    read_bytes = fread(&bytes, 1, 4, pfile);
+    values = (uint32_t *)malloc(sizeof(uint32_t) * file_num);
 
-    if (read_bytes < 4)
+    sum = 0;
+
+    for (int i = 0; i < file_num; i++) 
     {
-        printf("%s is not 4byte.\n", filename);
-        return 1;
+        if (read_file(&values[i], args[i+1]) == 1)
+        {
+            free(values);
+            return 1;
+        }
+
+        sum += values[i];
     }
+    
+    
+    print_all(sum, values, file_num);
 
-    *val_ptr = ntohl(bytes);
 
-    fclose(pfile);
+    free(values);
     return 0;
 }
-
-
-void print_all(uint32_t sum, uint32_t *values, int len)
-{
-    for (int i = 0; i < len; i++)
-    {
-        printf("%d(%04x) ", values[i], values[i]);
-        if (i < len - 1)
-            printf(" + ");
-    }
-    printf(" = %d(%04x)", sum, sum);
-}
-
-
-
-uint32_t ntohl(uint32_t n)
-{
-        uint8_t n1 = (n >> 24) & 0xff;
-        uint8_t n2 = (n >> 16) & 0xff;
-        uint8_t n3 = (n >> 8) & 0xff;
-        uint8_t n4 = n & 0xff;
-
-        return (n4 << 24) | (n3 << 16) | (n2 << 8) | n1 ;
-}
-
