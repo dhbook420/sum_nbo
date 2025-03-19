@@ -2,7 +2,7 @@
 
 use argc, argv to get input files
 
-if argc > 2, which means least one input file exists, define the numver of files and allocate memory dynamically
+if argc > 2, which means least one input file exists, define the number of files and allocate memory dynamically
 
 then, initialize sum that will contains the sum of the values
 
