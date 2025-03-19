@@ -32,11 +32,11 @@ void print_all(uint32_t sum, uint32_t *values, int len)
 {
     for (int i = 0; i < len; i++)
     {
-        printf("%d(0x%08x)", values[i], values[i]);
+        printf("%d(0x%04x)", values[i], values[i]);
         if (i < len - 1)
             printf(" + ");
     }
-    printf(" = %d(0x%08x)\n", sum, sum);
+    printf(" = %d(0x%04x)\n", sum, sum);
 }
 
 
