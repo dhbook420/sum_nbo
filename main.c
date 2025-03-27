@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 int main(int argc, char** args)
 {
 
@@ -13,14 +12,9 @@ int main(int argc, char** args)
         return 1;
     }
     
-    //argc를 바탕으로 더할 uint32 변수들을 할당
     int         file_num = argc - 1;
-    uint32_t*   values;
-    uint32_t    sum;
-
-    values = (uint32_t *)malloc(sizeof(uint32_t) * file_num);
-
-    sum = 0;
+    uint32_t*   values = (uint32_t *)malloc(sizeof(uint32_t) * file_num);;
+    uint32_t    sum = 0;
 
     for (int i = 0; i < file_num; i++) 
     {
